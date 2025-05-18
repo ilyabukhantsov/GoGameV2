@@ -1,0 +1,15 @@
+{
+  "name": "gogamev2",
+  "version": "1.0.0",
+  "description": "Original Repo https://github.com/ilyabukhantsov/GoGame \u0000",
+  "main": "index.js",
+  "scripts": {
+    "both": "concurrently \"npm run client --prefix client\" \"npm run server --prefix server\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
