@@ -1,10 +1,11 @@
 const UserModel = require("../models/user-model");
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
-const MailService = require("/mail-service");
 const mailService = require("./mail-service");
 const TokenService = require("./token-service");
 const UserDto = require("../dtos/user-dto");
+const tokenService = require("./token-service");
+
 class UserService {
   async registration(email, password) {
     const candidate = await UserModel.findOne({ email });
@@ -20,10 +21,15 @@ class UserService {
       password: hashPassword,
       activationLink,
     });
+
     await mailService.sendActivationMail(email, activationLink);
-    const UserDto = new UserDto(user);
+
+    const userDto = new UserDto(user);
     const tokens = TokenService.generationTokens({ ...userDto });
+    await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+    return { ...tokens, user: userDto };
   }
 }
 
-module.export = new UserService();
+module.exports = new UserService();
