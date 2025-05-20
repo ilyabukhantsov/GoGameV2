@@ -1,1 +1,7 @@
 @import 'tailwindcss';
+
+html {
+  font-family: Arial, Verdana, sans-serif;
+  color: white;
+  background-color: #121212;
+}
