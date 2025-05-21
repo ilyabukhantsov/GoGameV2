@@ -1,22 +1,23 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { Link } from 'react-router';
 
-interface LoginPageData {
+interface RegisterData {
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const {
-    register,
     handleSubmit,
     formState: { errors },
+    register,
+    watch,
     reset,
-  } = useForm<LoginPageData>();
+  } = useForm<RegisterData>();
 
-  const onSubmit: SubmitHandler<LoginPageData> = (data) => {
+  const onSubmit: SubmitHandler<RegisterData> = (data) => {
     try {
-      fetch('http://localhost:5000/api/login', {
+      fetch('http://localhost:5000/api/registration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,16 +31,17 @@ const LoginPage = () => {
         .then((data) => {
           localStorage.setItem('token', JSON.stringify(data));
         })
-        .catch((err) => console.error(err));
+        .catch((e) => console.log('Fetching data error', e));
       reset();
-    } catch (error) {
-      console.error('Error with login', error);
+    } catch (e) {
+      console.error('Error with registration', e);
     }
   };
+
   return (
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <div className="w-70 flex flex-col justify-center items-center p-1 gap-2">
-        <h1 className="text-2xl">Login</h1>
+        <h1 className="text-2xl">Registration</h1>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-2 w-full"
@@ -86,25 +88,35 @@ const LoginPage = () => {
               })}
             />
           </div>
+          <div className="flex flex-col">
+            <label htmlFor="confirmPassword" className="">
+              Підтвердіть пароль:
+              {errors.confirmPassword && (
+                <span className=""> *{errors.confirmPassword.message}</span>
+              )}
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              className=""
+              placeholder="Підтвердіть пароль"
+              {...register('confirmPassword', {
+                required: 'Підтвердження пароля обов`язкове',
+                validate: (value) =>
+                  value === watch('password') || 'Паролі не збігаються',
+              })}
+            />
+          </div>
           <button
             type="submit"
             className="mt-4 border-solid border-white border-1 p-1 cursor-pointer"
           >
-            Увійти
+            Зареєструватись
           </button>
-          <div className="flex mx-auto gap-1.5">
-            <a href="#" className="">
-              Забули пароль?
-            </a>
-            <span className="">|</span>
-            <Link to="/register" className="">
-              Зареєструватися
-            </Link>
-          </div>
         </form>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
