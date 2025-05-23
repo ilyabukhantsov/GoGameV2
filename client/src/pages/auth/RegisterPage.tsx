@@ -1,4 +1,5 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { useAuth } from '../../app/context/auth/useAuth';
 
 interface RegisterData {
   email: string;
@@ -7,6 +8,7 @@ interface RegisterData {
 }
 
 const RegisterPage = () => {
+  const { register: registerUser } = useAuth();
   const {
     handleSubmit,
     formState: { errors },
@@ -17,21 +19,7 @@ const RegisterPage = () => {
 
   const onSubmit: SubmitHandler<RegisterData> = (data) => {
     try {
-      fetch('http://localhost:5000/api/registration', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          localStorage.setItem('token', JSON.stringify(data));
-        })
-        .catch((e) => console.log('Fetching data error', e));
+      registerUser(data.email, data.password);
       reset();
     } catch (e) {
       console.error('Error with registration', e);

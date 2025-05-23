@@ -1,5 +1,6 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router';
+import { useAuth } from '../../app/context/auth/useAuth';
 
 interface LoginPageData {
   email: string;
@@ -7,6 +8,8 @@ interface LoginPageData {
 }
 
 const LoginPage = () => {
+  const { login } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -16,21 +19,7 @@ const LoginPage = () => {
 
   const onSubmit: SubmitHandler<LoginPageData> = (data) => {
     try {
-      fetch('http://localhost:5000/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          localStorage.setItem('token', JSON.stringify(data));
-        })
-        .catch((err) => console.error(err));
+      login(data.email, data.password);
       reset();
     } catch (error) {
       console.error('Error with login', error);
