@@ -47,6 +47,11 @@ class TokenService {
       return null;
     }
   }
+
+  async findToken(refreshToken) {
+    const tokenData = await tokenModel.findOne({refreshToken})
+    return tokenData;
+  }
 }
 
 module.exports = new TokenService();
