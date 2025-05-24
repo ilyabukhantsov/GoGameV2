@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div>
       <h1>Home</h1>
-      {user ? <p>{user.email}</p> : <p><Link to={'/login'}>Login</Link></p>}
+      {user ? <p>{user.email} {user.isActivated ? 'Почта активована' : 'Почта не активована'}</p> : <p><Link to={'/login'}>Login</Link></p>}
       <button onClick={logout}>Logout</button>
     </div>
   );

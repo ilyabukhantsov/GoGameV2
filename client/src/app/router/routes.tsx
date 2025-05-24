@@ -18,6 +18,6 @@ export const router = createHashRouter([
   },
   {
     path: '/register',
-    element: <RegisterPage />,
+    element: <ProtectedRoutes><RegisterPage /></ProtectedRoutes>,
   },
 ]);

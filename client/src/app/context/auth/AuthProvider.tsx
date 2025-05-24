@@ -11,9 +11,10 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
             try {
                 const res = await fetch('http://localhost:5000/api/refresh', {
                     credentials: 'include',
+                    headers: {
+                        'Authorization': `Baerer ${localStorage.getItem('token')}`
+                    }
                 });
-                console.log('res: ', res);
-                console.log('data: ', await res.json());
                 const data: ResponseData = await res.json();
                 setUser(data.user);
                 setIsLoading(false);
@@ -85,7 +86,13 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
     const logout = async () => {
         try {
-            fetch('http://localhost:5000/api/logout');
+            fetch('http://localhost:5000/api/logout', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+              });
             localStorage.removeItem('token');
             setUser(null);
         } catch(e) {
