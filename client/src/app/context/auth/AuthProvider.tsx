@@ -83,12 +83,25 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         }
     }
 
+    const logout = async () => {
+        try {
+            fetch('http://localhost:5000/api/logout');
+            localStorage.removeItem('token');
+            setUser(null);
+        } catch(e) {
+            console.error(e);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     return (
         <AuthContext.Provider value={{
             user,
             isLoading,
             login,
             register,
+            logout,
         }}>
             {children}
         </AuthContext.Provider>
