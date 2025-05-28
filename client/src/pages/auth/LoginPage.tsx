@@ -1,6 +1,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router';
 import { useAuth } from '../../app/context/auth/useAuth';
+import cls from './AuthStyles.module.css';
 
 interface LoginPageData {
   email: string;
@@ -26,9 +27,9 @@ const LoginPage = () => {
     }
   };
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center">
-      <div className="w-70 flex flex-col justify-center items-center p-1 gap-2">
-        <h1 className="text-2xl">Login</h1>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-80 flex flex-col gap-2 bg-zinc-800 rounded-xl shadow-lg p-6 border border-zinc-700">
+        <h1 className="text-2xl text-center">Login</h1>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-2 w-full"
@@ -43,7 +44,7 @@ const LoginPage = () => {
             <input
               type="email"
               id="email"
-              className=""
+              className={cls.authInput}
               placeholder="Введіть вашу електронну пошту"
               {...register('email', {
                 required: 'Email обов`язковий.',
@@ -64,7 +65,7 @@ const LoginPage = () => {
             <input
               type="password"
               id="password"
-              className=""
+              className={cls.authInput}
               placeholder="Введіть ваш пароль"
               {...register('password', {
                 required: 'Пароль обов`язковий.',
@@ -77,16 +78,16 @@ const LoginPage = () => {
           </div>
           <button
             type="submit"
-            className="mt-4 border-solid border-white border-1 p-1 cursor-pointer"
+            className="mt-4 border border-solid border-white cursor-pointer hover:bg-white/10 px-3 py-1 rounded-xl transition duration-200"
           >
             Увійти
           </button>
           <div className="flex mx-auto gap-1.5">
-            <a href="#" className="">
+            <Link to="/pass-recovery" className="hover:underline">
               Забули пароль?
-            </a>
+            </Link>
             <span className="">|</span>
-            <Link to="/register" className="">
+            <Link to="/register" className="hover:underline">
               Зареєструватися
             </Link>
           </div>

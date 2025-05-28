@@ -1,15 +1,11 @@
-import { Link } from 'react-router';
-import { useAuth } from './context/auth/useAuth';
+import { Outlet } from 'react-router';
+import Layout from './Layout';
 
 const Home = () => {
-  const { user, logout } = useAuth();
-
   return (
-    <div>
-      <h1>Home</h1>
-      {user ? <p>{user.email} {user.isActivated ? 'Почта активована' : 'Почта не активована'}</p> : <p><Link to={'/login'}>Login</Link></p>}
-      <button onClick={logout}>Logout</button>
-    </div>
+    <Layout>
+      <Outlet />
+    </Layout>
   );
 };
 

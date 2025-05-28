@@ -3,6 +3,7 @@ import Home from '../Home';
 import RegisterPage from '../../pages/auth/RegisterPage';
 import LoginPage from '../../pages/auth/LoginPage';
 import { ProtectedRoutes } from './ProtectedRoutes/ProtectedRoutes';
+import PassRecoveryPage from '../../pages/auth/PassRecoveryPage';
 
 export const router = createHashRouter([
   {
@@ -11,13 +12,22 @@ export const router = createHashRouter([
   },
   {
     path: '/login',
-    element: 
+    element: (
       <ProtectedRoutes>
         <LoginPage />
-      </ProtectedRoutes>,
+      </ProtectedRoutes>
+    ),
   },
   {
     path: '/register',
-    element: <ProtectedRoutes><RegisterPage /></ProtectedRoutes>,
+    element: (
+      <ProtectedRoutes>
+        <RegisterPage />
+      </ProtectedRoutes>
+    ),
+  },
+  {
+    path: '/pass-recovery',
+    element: <PassRecoveryPage />,
   },
 ]);

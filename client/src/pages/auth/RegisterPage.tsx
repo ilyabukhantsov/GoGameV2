@@ -1,5 +1,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useAuth } from '../../app/context/auth/useAuth';
+import cls from './AuthStyles.module.css';
+import { Link } from 'react-router';
 
 interface RegisterData {
   email: string;
@@ -27,9 +29,9 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center">
-      <div className="w-70 flex flex-col justify-center items-center p-1 gap-2">
-        <h1 className="text-2xl">Registration</h1>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-80 flex flex-col gap-2 bg-zinc-800 rounded-xl shadow-lg p-6 border border-zinc-700">
+        <h1 className="text-2xl text-center">Registration</h1>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-2 w-full"
@@ -44,7 +46,7 @@ const RegisterPage = () => {
             <input
               type="email"
               id="email"
-              className=""
+              className={cls.authInput}
               placeholder="Введіть вашу електронну пошту"
               {...register('email', {
                 required: 'Email обов`язковий.',
@@ -65,7 +67,7 @@ const RegisterPage = () => {
             <input
               type="password"
               id="password"
-              className=""
+              className={cls.authInput}
               placeholder="Введіть ваш пароль"
               {...register('password', {
                 required: 'Пароль обов`язковий.',
@@ -86,7 +88,7 @@ const RegisterPage = () => {
             <input
               type="password"
               id="confirmPassword"
-              className=""
+              className={cls.authInput}
               placeholder="Підтвердіть пароль"
               {...register('confirmPassword', {
                 required: 'Підтвердження пароля обов`язкове',
@@ -97,10 +99,13 @@ const RegisterPage = () => {
           </div>
           <button
             type="submit"
-            className="mt-4 border-solid border-white border-1 p-1 cursor-pointer"
+            className="mt-4 border border-solid border-white cursor-pointer hover:bg-white/10 px-3 py-1 rounded-xl transition duration-200"
           >
             Зареєструватись
           </button>
+          <Link to="/login" className="hover:underline text-center">
+            Вже маю аккаунт
+          </Link>
         </form>
       </div>
     </div>
