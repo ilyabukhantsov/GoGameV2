@@ -5,7 +5,6 @@ export type User = {
 };
 
 export type ResponseData = {
-  refreshToken: string;
   accessToken: string;
   user: User;
 };

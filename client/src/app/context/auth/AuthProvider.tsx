@@ -14,10 +14,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           const res = await fetch('http://localhost:5000/api/refresh', {
             credentials: 'include',
             headers: {
-              Authorization: `Baerer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
           });
           const data: ResponseData = await res.json();
+          console.log('refresh data:', data);
+          localStorage.setItem('token', data.accessToken);
           setUser(data.user);
           setIsLoading(false);
         }
@@ -46,13 +48,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
       if (!res.ok) throw new Error(`Login error`);
       const data: ResponseData = await res.json();
-      localStorage.setItem(
-        'token',
-        JSON.stringify({
-          accessToken: data.accessToken,
-          refreshToken: data.refreshToken,
-        })
-      );
+      localStorage.setItem('token', data.accessToken);
       setUser(data.user);
       setIsLoading(false);
     } catch {
@@ -77,13 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
       if (!res.ok) throw new Error(`Login error`);
       const data: ResponseData = await res.json();
-      localStorage.setItem(
-        'token',
-        JSON.stringify({
-          accessToken: data.accessToken,
-          refreshToken: data.refreshToken,
-        })
-      );
+      localStorage.setItem('token', data.accessToken);
       setUser(data.user);
       setIsLoading(false);
     } catch {

@@ -13,11 +13,12 @@ class UserController {
       }
       const { email, password } = req.body;
       const userData = await userService.registration(email, password);
-      res.cookie("refreshToken", userData.refreshToken, {
+      const { refreshToken, ...restPayload } = userData;
+      res.cookie("refreshToken", refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
-      return res.json(userData);
+      return res.json(restPayload);
     } catch (e) {
       next(e);
     }
@@ -27,11 +28,12 @@ class UserController {
     try {
       const { email, password } = req.body;
       const userData = await userService.login(email, password);
-      res.cookie("refreshToken", userData.refreshToken, {
+      const { refreshToken, ...restPayload } = userData;
+      res.cookie("refreshToken", refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
-      return res.json(userData);
+      return res.json(restPayload);
     } catch (e) {
       next(e);
     }
@@ -62,11 +64,12 @@ class UserController {
     try {
       const { refreshToken } = req.cookies;
       const userData = await userService.refresh(refreshToken);
-      res.cookie("refreshToken", userData.refreshToken, {
+      const { refreshToken: newRefreshToken, ...restPayload } = userData;
+      res.cookie("refreshToken", newRefreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
-      return res.json(userData);
+      return res.json(restPayload);
     } catch (e) {
       next(e);
     }
