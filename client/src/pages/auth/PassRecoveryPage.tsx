@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 const PassRecoveryPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-zinc-800 rounded-xl shadow-lg p-6 text-center border border-zinc-700">
+      <div className="max-w-md w-full rounded-xl p-6 text-center bg-default">
         <h1 className="text-2xl font-semibold text-purple-400 mb-4">
           Не так сталося як гадалося
         </h1>

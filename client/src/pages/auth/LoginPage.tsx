@@ -28,7 +28,7 @@ const LoginPage = () => {
   };
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="w-80 flex flex-col gap-2 bg-zinc-800 rounded-xl shadow-lg p-6 border border-zinc-700">
+      <div className="w-80 flex flex-col gap-2 p-6 rounded-xl bg-default">
         <h1 className="text-2xl text-center">Login</h1>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -78,7 +78,7 @@ const LoginPage = () => {
           </div>
           <button
             type="submit"
-            className="mt-4 border border-solid border-white cursor-pointer hover:bg-white/10 px-3 py-1 rounded-xl transition duration-200"
+            className="mt-4 border border-solid border-white px-3 py-1 rounded-xl hover-default"
           >
             Увійти
           </button>
