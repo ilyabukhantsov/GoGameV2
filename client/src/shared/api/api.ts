@@ -11,6 +11,7 @@ export const $api = async (
     ...requestOptions,
     headers: {
       ...(requestOptions.headers || {}),
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
@@ -23,7 +24,6 @@ export const $api = async (
       throw new Error('Failed to refresh token');
     }
     const data: ResponseData = await res.json();
-    console.log('refresh data:', data);
     localStorage.setItem('token', data.accessToken);
     $api(path, requestOptions, false);
   }
